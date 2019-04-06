@@ -32,10 +32,7 @@ int main(void) {
 	int semaphoe = createSemaphoe();
 
 	lockSemaphoe(semaphoe, 0);
-  waitSemaphoe(semaphoe, 0);
 	while (1) {
-		waitSemaphoe(semaphoe, 0);
-
 		char* input_message = (char*)malloc(MAX_MSG_SIZE);
 		char* output_message = (char*)malloc(MAX_MSG_SIZE);
 		
@@ -45,8 +42,8 @@ int main(void) {
 		reverseMessage(&output_message);
 		writeMessageToLatter(&shmem_addr, &output_message);
 
-		lockSemaphoe(semaphoe, 0);
 		unlockSemaphoe(semaphoe, 1);
+		lockSemaphoe(semaphoe, 0);
 
 		waitSemaphoe(semaphoe, 0);
 
@@ -57,8 +54,8 @@ int main(void) {
 			return 0;
 		}
 
-		lockSemaphoe(semaphoe, 0);
 		unlockSemaphoe(semaphoe, 1);
+		lockSemaphoe(semaphoe, 0);
 	}
 	deleteSemaphoe(semaphoe);
 	deleteSharedMemory(shmem_key, &shmem_addr);

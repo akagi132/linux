@@ -6,8 +6,8 @@
 #include "protocol.h"
 #include "print.h"
 
-#define LOCK 1
-#define UNLOCK -1
+#define LOCK -1
+#define UNLOCK 1
 #define WAIT 0
 
 union semun {

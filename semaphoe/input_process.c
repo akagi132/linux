@@ -31,46 +31,36 @@ int main() {
 
 	for (int count = 0; count < 100; count++) {
 		for (int i = 0; i < 4; i++) {
-			waitSemaphoe(semaphoe, 1);
-
 			char* input_str = (char*)malloc(MAX_MSG_SIZE);
 			strncpy(input_str, str[i], MAX_MSG_SIZE);
 
 			writeMessageToFirst(&shmem_addr, &input_str);
 
-			lockSemaphoe(semaphoe, 1);
 			unlockSemaphoe(semaphoe, 0);
-
-			waitSemaphoe(semaphoe, 1);
+			lockSemaphoe(semaphoe, 1);
 
 			char* output_str = (char*)malloc(MAX_MSG_SIZE);
 
 			readMessageFromLatter(&shmem_addr, &output_str);
 			USER_MSG("%s\n", output_str);
 
-			lockSemaphoe(semaphoe, 1);
 			unlockSemaphoe(semaphoe, 0);
+			lockSemaphoe(semaphoe, 1);
 		}
 	}
-
-	waitSemaphoe(semaphoe, 1);
-
 	char* input_str = (char*)malloc(MAX_MSG_SIZE);
 	strncpy(input_str, "END", MAX_MSG_SIZE);
 
 	writeMessageToFirst(&shmem_addr, &input_str);
 
-	lockSemaphoe(semaphoe, 1);
 	unlockSemaphoe(semaphoe, 0);
-
-	waitSemaphoe(semaphoe, 1);
+	lockSemaphoe(semaphoe, 1);
 
 	char* output_str = (char*)malloc(MAX_MSG_SIZE);
 
 	readMessageFromLatter(&shmem_addr, &output_str);
 	USER_MSG("%s\n", output_str);
 
-	lockSemaphoe(semaphoe, 1);
 	unlockSemaphoe(semaphoe, 0);
   return 0;
 }
